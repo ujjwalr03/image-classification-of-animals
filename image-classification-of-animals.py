@@ -1,60 +1,75 @@
-#Import libraries
+# Import Libraries
 import tensorflow as tf
-import os
 import numpy as np
+import os
 import cv2
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.applications import MobileNetV2
 from tensorflow.keras.layers import Dense, Dropout, GlobalAveragePooling2D
 from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import Adam
+import glob
 
-# Paths
 DATASET_PATH = "dataset/"
-MODEL_PATH = "saved_model/animal_classifier.h5"
+image_extensions = ['*.png', '*.jpg', '*.jpeg', '*.gif', '*.bmp', '*.tiff', '*.webp']
+
+# Data Preprocessing (REPLACE this section)
 IMG_SIZE = (224, 224)
 BATCH_SIZE = 32
 
-# Load dataset
-datagen = ImageDataGenerator(rescale=1./255, validation_split=0.2)
-train_data = datagen.flow_from_directory(DATASET_PATH, target_size=IMG_SIZE, batch_size=BATCH_SIZE, class_mode="categorical", subset="training")
+# Enhanced data augmentation
+train_datagen = ImageDataGenerator(
+    rescale=1./255,
+    rotation_range=20,
+    width_shift_range=0.2,
+    height_shift_range=0.2,
+    shear_range=0.2,
+    zoom_range=0.2,
+    horizontal_flip=True,
+    fill_mode='nearest',
+    validation_split=0.2
+)
 
-# Build model
-base_model = MobileNetV2(input_shape=(224, 224, 3), include_top=False, weights="imagenet")
-base_model.trainable = False
-x = GlobalAveragePooling2D()(base_model.output)
-x = Dense(128, activation="relu")(x)
-x = Dropout(0.3)(x)
-output = Dense(train_data.num_classes, activation="softmax")(x)
 
-model = Model(inputs=base_model.input, outputs=output)
-model.compile(optimizer=Adam(learning_rate=0.001), loss="categorical_crossentropy", metrics=["accuracy"])
+# Use enhanced augmentation only for training data
+train_data = train_datagen.flow_from_directory(
+    DATASET_PATH,
+    target_size=IMG_SIZE,
+    batch_size=BATCH_SIZE,
+    class_mode="categorical",
+    subset="training"
+)
 
-# Train model
-model.fit(train_data, epochs=10)
+# Upload an Image for Testing
+image_path = next((img for ext in image_extensions for img in glob.glob(ext)), None)
 
-# Save model
-os.makedirs("saved_model", exist_ok=True)
-model.save(MODEL_PATH)
+# Load Model for Prediction
+model = tf.keras.models.load_model("animal_classifier.h5")
 
-# Load trained model for testing
-model = tf.keras.models.load_model(MODEL_PATH)
-
-# Predict on a new image
-def predict_animal(image_path):
-    class_labels = os.listdir(DATASET_PATH)
-
-    img = cv2.imread(image_path)
+# Predict on Uploaded Image
+def preprocess_image(img_path):
+    img = cv2.imread(img_path)
+    if img is None:
+        print(f"Error reading image at {img_path}")
+        return None
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # Convert BGR to RGB
     img = cv2.resize(img, (224, 224))
     img = img / 255.0
     img = np.expand_dims(img, axis=0)
+    return img
 
-    predictions = model.predict(img)
-    class_idx = np.argmax(predictions)
+# Load the best model instead of the last one
+model = tf.keras.models.load_model("best_animal_model.h5")
 
-    return class_labels[class_idx]
+# Get class mapping from the training generator
+class_indices = train_data.class_indices
+class_labels = {v: k for k, v in class_indices.items()}  # Reverse mapping
 
-# Test on a sample image
-test_image = "test_images/sample.jpg"  # Provide test image path
-predicted_class = predict_animal(test_image)
-print(f"{predicted_class}")
+# Make prediction
+processed_img = preprocess_image(image_path)
+if processed_img is not None:
+    predictions = model.predict(processed_img)
+    predicted_class_idx = np.argmax(predictions)
+    predicted_class = class_labels[predicted_class_idx]
+
+    print(f"{predicted_class}")
