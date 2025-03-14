@@ -52,8 +52,7 @@ Click the button below to open the notebook in Google Colab:
 ### **Steps in Google Colab**  
 1. Click **"Open in Colab"** above.  
 2. Run all cells sequentially.  
-3. Upload the image for classification.  
-4. The model identifies the animal and shows the top-3 predictions.  
+3. Upload the image for classification.   
 
 ---
 
