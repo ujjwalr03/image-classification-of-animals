@@ -21,16 +21,13 @@ This project focuses on identifying various animal species using a pre-trained d
 
 ---
 
-Here's a more visually appealing `README.md` with symbols:
-
----
-
 ## **🗂️ Dataset**
 
 The dataset consists of categorized images of various animals. Each folder corresponds to a specific animal class, with the folder name representing the species.
 
 ### 📂 Directory Structure:
 
+~~~
 📁 dataset/
 │
 ├── 🐻 Bear/
@@ -48,6 +45,7 @@ The dataset consists of categorized images of various animals. Each folder corre
 ├── 🐼 Panda/
 ├── 🐅 Tiger/
 └── 🦓 Zebra/
+~~~
 
 ### ⚠️ Important Note:
 - ✅ **Only the animals listed above can be predicted.**
