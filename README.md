@@ -6,11 +6,9 @@ This project focuses on identifying various animal species using a pre-trained d
 ---
 
 ## **🛠 Features**  
-✅ **Pre-trained model for animal classification**  
-✅ **Real-time image prediction with top-3 results**  
+✅ **Pre-trained model for animal classification**   
 ✅ **Enhanced data augmentation for better accuracy**  
 ✅ **Class weight handling for imbalanced data**  
-✅ **Model evaluation and performance metrics display**  
 
 ---
 
