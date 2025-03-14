@@ -1,71 +1,63 @@
-## **📌 Project Description: Image Classification of Animals**  
+# **🐾 Image Classification of Animals using Deep Learning**  
 
-This project builds a **Deep Learning model** using **MobileNetV2 (Transfer Learning)** to classify images of animals into **15 categories**. It provides **two execution options**:  
+## 📌 **Project Overview**  
+This project focuses on identifying various animal species using a pre-trained deep learning model. The model leverages MobileNetV2 with enhanced data augmentation for improved accuracy and generalization.  
 
 ---
 
 ## **🛠 Features**  
-✅ **Uses Pre-trained MobileNetV2 for Fast & Accurate Classification**  
-✅ **15 Animal Classes (Bear, Dog, Cat, Lion, Tiger, etc.)**  
-✅ **Trains & Saves Model for Future Predictions**  
-✅ **Supports User-Uploaded Image Testing**  
-✅ **No Accuracy Graphs – Only Image Detection Output**  
+✅ **Pre-trained model for animal classification**  
+✅ **Real-time image prediction with top-3 results**  
+✅ **Enhanced data augmentation for better accuracy**  
+✅ **Class weight handling for imbalanced data**  
+✅ **Model evaluation and performance metrics display**  
 
 ---
 
-## **🔹 Technologies Used**
-- **TensorFlow / Keras** → Deep Learning framework  
-- **MobileNetV2** → Transfer Learning for fast & accurate classification  
+## **🔹 Technologies Used**  
+- **Python** → Model handling and data manipulation  
+- **TensorFlow & Keras** → Deep learning framework  
 - **OpenCV** → Image preprocessing  
+- **NumPy** → Data handling  
+- **Google Colab** → Model testing environment  
 
 ---
 
-## **💻 Steps to Run Locally**
-1. **Clone the Repository**  
-   ```bash
-   git clone https://github.com/ujjwalr03/image-classification-of-animals.git
-   cd image-classification-of-animals
-   ```
-2. **Install Dependencies**  
-   ```bash
-   pip install tensorflow opencv-python numpy
-   ```
-3. **Ensure Your Dataset is in `dataset/` Folder**  
-   ```
-   /dataset
-   │── /Bear
-   │── /Bird
-   │── /Cat
-   │── /Dog
-   │── /Elephant
-   │── ... (Other Classes)
-   ```
-4. **Run the script**  
-   ```bash
-   python image-classification-of-animals.py
-   ```
-5. **Test an Image**
-   - Place test images inside `test_images/`
-   - Modify the script to use the correct image path  
-   ```bash
-   python image-classification-of-animals.py
-   ```
+## **💻 How to Run the Project**  
+
+### **1️⃣ Run Locally**  
+#### **Clone the Repository**  
+```bash
+!git clone https://github.com/ujjwalr03/image-classification-of-animals.git
+cd image-classification-of-animals
+```
+
+#### **Install Dependencies**  
+```bash
+pip install tensorflow opencv-python
+```
+
+#### **Run the Script**  
+```bash
+python image-classification-of-animals.py
+```
 
 ---
 
-## **🔗 Open in Google Colab**
-Click below to open the notebook in Google Colab:  
+### **2️⃣ Run on Google Colab**  
+Click the button below to open the notebook in Google Colab:  
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ujjwalr03/image-classification-of-animals/blob/main/image-classification-of-animals-colab.ipynb)  
 
-### **Steps in Google Colab**
-1. Click the **"Open in Colab"** button above.  
-2. Run all cells (dataset is downloaded automatically).  
-3. Upload an image when prompted for testing.  
+### **Steps in Google Colab**  
+1. Click **"Open in Colab"** above.  
+2. Run all cells sequentially.  
+3. Upload the image for classification.  
+4. The model identifies the animal and shows the top-3 predictions.  
 
 ---
 
-## 📜 **License**
+## **📜 License**  
 This project is open-source under the **MIT License**.  
 
 ---
